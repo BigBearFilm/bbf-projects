@@ -1,0 +1,24 @@
+/* Restore v5 light workspace; category headers alone carry section colour. */
+.sheet tr.category>td.lp,.sheet tr.category>td.row-tools{background:#f1f4f8!important}
+.sheet tr.subcategory>td.lp,.sheet tr.subcategory>td.row-tools{background:color-mix(in srgb,var(--section-accent) 8%,white)!important}
+.sheet tr.category>td,.sheet tr.subcategory>td{background-clip:padding-box}
+.sheet .group-label{align-items:center}
+.sheet .group-label>input{align-self:center;line-height:20px}
+.sheet .group-icon,.sheet .fold-button{display:inline-flex;align-items:center;justify-content:center;align-self:center;vertical-align:middle;margin-top:0;margin-bottom:0}
+.sheet .group-icon .ui-icon,.sheet .fold-button .ui-icon{vertical-align:initial;display:block}
+#settlementSheet tbody tr:not(.category):not(.subcategory)>td.lp,#settlementSheet tbody tr:not(.category):not(.subcategory)>td.name input[readonly]{color:#222!important}
+#estimateSheet th.plan-column,#estimateSheet td.plan-column{border-left:3px solid #b1c7e2!important}
+#estimateSheet th.plan-column,#estimateSheet th.plan-total{background:#eaf2fc!important;color:#52739e}
+#estimateSheet td.plan-column input{color:#3e6088}
+#estimateSheet td.plan-total{font-weight:500}
+#estimateSheet td.plan-column,#estimateSheet td.plan-total{min-width:120px}
+#personPicker{position:fixed;z-index:120;background:white;border:1px solid #ccdcee;border-radius:7px;box-shadow:0 10px 35px #284c7829;padding:5px;max-height:290px;overflow:auto}
+#personPicker button{display:block;width:100%;background:white;border:0;border-radius:4px;text-align:left;padding:10px;color:#4f6680;font-size:12px}
+#personPicker button small{display:block;margin-top:5px;color:#96a5b6;font-size:10px}
+#personPicker button:hover,#personPicker button.highlighted{background:#edf4ff}
+#personPicker .add-person-suggestion{color:#4c80bc;border-top:1px solid #e5edf7;margin-top:4px}
+.no-person-match{font-size:11px;color:#95a4b8;padding:12px}
+.crew-page .table-shell{max-height:calc(100dvh - 250px)}
+.crew-sheet th:nth-child(2){width:210px}
+.crew-sheet input[data-person-query]{color:#466c99}
+@media(max-width:760px){.crew-page .table-shell{max-height:calc(100dvh - 220px)}#personPicker button{min-height:44px}}

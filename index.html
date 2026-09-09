@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pl" class="auth-locked">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>BBF Projects — kosztorysy i rozliczenia</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="design.css" />
+  <link rel="stylesheet" href="refinements.css" />
+  <link rel="stylesheet" href="adjustments.css" />
+<link rel="stylesheet" href="details.css">
+<link rel="stylesheet" href="reports.css">
+<link rel="stylesheet" href="cloud.css">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+</head>
+<body>
+<section id="authGate"><div class="auth-card"><h1>Big Bear Film</h1><p>Projekty, kosztorysy i rozliczenia w jednym miejscu.</p><form id="authForm"><label for="authEmail">E-mail</label><input id="authEmail" type="email" autocomplete="username" required><label for="authPassword">Hasło</label><input id="authPassword" type="password" autocomplete="current-password" required><button class="primary" type="submit">Zaloguj się</button></form><button class="ghost" id="magicLogin">Wyślij link logowania na e-mail</button><p id="authMessage" class="auth-message" role="status">Łączenie…</p><button hidden id="cloudRetry" class="ghost">Ponów wczytywanie</button></div></section>
+<div id="syncBanner" hidden role="status"></div>
+
+<div id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">BB</div>
+      <div>
+        <strong>Big Bear Film</strong>
+        <span>Projects</span>
+      </div>
+      <button class="icon-btn mobile-only" id="closeSidebar">×</button>
+    </div>
+
+    <button class="nav-row active" data-action="dashboard">
+      <span class="nav-icon">◫</span><span>Dashboard projektów</span>
+    </button>
+    <div class="side-actions">
+      <button class="primary small" id="newProject">+ Nowy projekt</button>
+    </div>
+    <div id="projectGroups"></div>
+    <div class="sidebar-bottom">
+      <button class="nav-row" id="settingsBtn"><span class="nav-icon">⚙</span><span>Ustawienia</span></button>
+    </div>
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn desktop-hidden" id="openSidebar">☰</button>
+        <div>
+          <div class="eyebrow" id="projectStatusLabel">PROJEKT</div>
+          <h1 id="projectTitleHeader">SUEMPOL — rolki</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="history-controls"><button id="undoBtn" class="icon-control" aria-label="Cofnij" title="Cofnij"></button><button id="redoBtn" class="icon-control" aria-label="Ponów" title="Ponów"></button><button id="historyBtn" class="icon-control" aria-label="Historia operacji" title="Historia operacji"></button></div>
+        <span class="save-state" id="saveState">Zapisano lokalnie</span>
+        <button class="ghost" id="duplicateProject">Duplikuj</button>
+        <button class="ghost" id="exportMenuBtn">Eksport ▾</button>
+      </div>
+      <div class="popover export-popover" id="exportMenu">
+        <button id="exportPdf">PDF / druk</button>
+        <button id="exportXlsx">Excel .xlsx</button>
+        <button id="exportJson">Kopia danych .json</button>
+      </div>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button data-tab="info" class="active">◉ Informacje</button>
+      <button data-tab="estimate">▦ Kosztorys</button>
+      <button data-tab="settlement">◈ Rozliczenie</button>
+      <button data-tab="crew">♧ Ekipa</button>
+    </nav>
+
+    <section class="content">
+      <div id="view"></div>
+    </section>
+  </main>
+</div>
+
+<div class="context-menu" id="contextMenu">
+  <button data-context="addBelow">Dodaj wiersz poniżej</button>
+  <button data-context="addSubcategory">Dodaj podkategorię</button>
+  <button data-context="addCategory">Dodaj kategorię</button>
+  <hr>
+  <button data-context="duplicate">Duplikuj wiersz</button>
+  <button data-context="delete" class="danger-text">Usuń</button>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script src="config.js"></script>
+<script src="supabase-vendor.js"></script>
+<script src="app.js"></script>
+<script src="workspace.js"></script>
+<script src="design.js"></script>
+<script src="refinements.js"></script>
+<script src="adjustments.js"></script>
+<script src="details.js"></script>
+<script src="reports.js"></script>
+<script src="cloud.js"></script>
+</body>
+</html>
