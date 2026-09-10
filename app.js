@@ -36,7 +36,7 @@ function calcActualCost(row,p=project()){
   if(['umowa zlecenie - student','faktura','paragon','różne'].includes(t)) return v;
   if(t==='prowizja') return v;
   if(t==='administracja'){
-    const contracts=p.rows.filter(r=>['umowa o dzieło','umowa zlecenie','umowa zlecenie - student'].includes((r.actualType||'').toLowerCase())).length;
+    const contracts=new Set(p.rows.filter(r=>['umowa o dzieło','umowa zlecenie','umowa zlecenie - student'].includes((r.actualType||'').toLowerCase())).map(r=>r.contractId||r.id)).size;
     return contracts*50;
   }
   if(t==='bbf'){
