@@ -1,7 +1,7 @@
 
 const PLN = new Intl.NumberFormat('pl-PL',{style:'currency',currency:'PLN',maximumFractionDigits:2});
 const pct = v => `${(v*100).toFixed(1).replace('.',',')}%`;
-const uid = () => Math.random().toString(36).slice(2,10);
+const uid = () => crypto.randomUUID();
 const clone = x => JSON.parse(JSON.stringify(x));
 const today = () => new Date().toISOString().slice(0,10);
 
