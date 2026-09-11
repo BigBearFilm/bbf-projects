@@ -26,9 +26,13 @@ Przy konflikcie lokalna wersja pozostaje zachowana. Komunikat pozwala pobrać j�
 - Cmd/Ctrl+F wyszukuje w tabeli i przewija do wyniku. Na telefonie dostępny jest przycisk wyszukiwania oraz pełny ekran tabeli.
 - Rental BBF: stawka netto × ilość stanowi zasób BBF, koszt zewnętrzny wynosi zero.
 - Podpozycje dodaje się z menu w rozliczeniu. Przy pierwszym podziale istniejące rozliczenie trafia do pierwszej podpozycji. Koszty i zasoby dzieci sumują się w rodzicu. Podpozycję usuwa się przez jej menu; w rozliczeniu nie ma koszy.
-- Cennik wybierany jest po dacie podpozycji, a następnie dacie zdjęć projektu. Obowiązuje najnowszy cennik z datą „Ważny od” nie późniejszą od tej daty. Nowy cennik kopiuje identyfikatory pozycji, dzięki czemu stare projekty zachowują połączenia. Zmiana stawki w starym cenniku świadomie koryguje odpowiadające mu historyczne rozliczenia.
+- Cennik wybierany jest po dacie zdjęć projektu. Obowiązuje najnowszy cennik z datą „Ważny od” nie późniejszą od tej daty. Nowy cennik kopiuje identyfikatory pozycji, dzięki czemu stare projekty zachowują połączenia. Zmiana stawki w starym cenniku świadomie koryguje odpowiadające mu historyczne rozliczenia.
 - Import JSON dostępny jest tylko do pustego zespołu. Kopie prywatnych danych nie należą do repozytorium.
 
 ## Weryfikacja
 
 Testy lokalne: migracja i RLS w PostgreSQL/PGlite, izolacja użytkowników, role owner/editor/viewer, atomowość transakcji, konflikt tej samej komórki, równoległy zapis dwóch klientów, przeładowanie zapisanych danych, klawiatura, wybór typów, Rental BBF, podpozycje, daty cenników, kopiowanie i wypełnianie, duplikacja, wyszukiwanie oraz widok mobilny. Kontrolny kosztorys SUEMPOL zachowuje wszystkie wcześniej zaakceptowane sumy.
+
+## Aktualizacja interfejsu 11
+
+Uproszczone podwiersze bez daty i wyboru osoby, zwijane przy rodzicu. Stabilne menu typu i zaznaczenie po zapisie. Cofanie zachowuje przewinięcie. Słownik zbiera używane opisy i zachowuje je między projektami. Mobilny pasek narzędzi, mniejsze KPI oraz cofanie/ponawianie w pełnym ekranie. Ta aktualizacja nie wymaga ponownego uruchamiania migracji SQL.
