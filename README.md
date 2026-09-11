@@ -36,3 +36,7 @@ Testy lokalne: migracja i RLS w PostgreSQL/PGlite, izolacja użytkowników, role
 ## Aktualizacja interfejsu 11
 
 Uproszczone podwiersze bez daty i wyboru osoby, zwijane przy rodzicu. Stabilne menu typu i zaznaczenie po zapisie. Cofanie zachowuje przewinięcie. Słownik zbiera używane opisy i zachowuje je między projektami. Mobilny pasek narzędzi, mniejsze KPI oraz cofanie/ponawianie w pełnym ekranie. Ta aktualizacja nie wymaga ponownego uruchamiania migracji SQL.
+
+## Aktualizacja interfejsu 12
+
+Kolumny można zwężać i rozszerzać przeciągając prawą krawędź nagłówka. Szerokości zapisują się w projekcie osobno dla kosztorysu, rozliczenia, ekipy i obsady, również w chmurze. Nagłówki są wyśrodkowane, kwoty wyrównane do prawej. W rozliczeniu zablokowane wartości są szare, edytowalna stawka czarna, koszt pogrubiony, zasób i overhead niebieskie, marża i retencja zielone/czerwone zależnie od znaku. Menu otwiera się z bieżącym typem zaznaczonym i nie jest przeładowywane w trakcie synchronizacji. Bez dodatkowej migracji SQL.

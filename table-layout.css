@@ -1,0 +1,25 @@
+#estimateSheet th,#settlementSheet th,.crew-sheet th{text-align:center!important;vertical-align:middle}
+#estimateSheet thead th:last-child{background:#e4ebf4!important;border-bottom-color:#cfdae8!important}
+#settlementSheet .amount-cell,#settlementSheet .amount-cell input{text-align:right!important;font-variant-numeric:tabular-nums}
+#settlementSheet tbody td.settlement-locked,#settlementSheet tbody td.settlement-locked input[readonly]{color:#8f9baa!important}
+#settlementSheet input[data-cell=actualNet].rate-editable,#settlementSheet .grid-editing input[data-cell=actualNet].rate-editable{color:#202630!important}
+#settlementSheet [data-metric=actual],#settlementSheet [data-child-actual]{color:#202630!important;font-weight:700!important}
+#settlementSheet [data-metric=internal],#settlementSheet [data-child-internal],#settlementSheet [data-metric=overhead]{color:#367cbd!important}
+#settlementSheet [data-metric=margin],#settlementSheet [data-metric=retention]{font-weight:700!important}
+#settlementSheet .amount-positive{color:#218765!important}#settlementSheet .amount-negative{color:#c64d55!important}
+#typeMenu button[aria-current=true]{background:#e8f2ff!important;color:#236bb5!important;box-shadow:inset 3px 0 #4285d4}
+.sheet.user-columns{table-layout:fixed;min-width:0!important}
+.sheet.user-columns th,.sheet.user-columns td{min-width:0!important;max-width:none!important;width:auto!important;box-sizing:border-box}
+.sheet.user-columns td{overflow:hidden}
+.sheet.user-columns td.grid-anchor{overflow:visible}
+.sheet.user-columns th{position:sticky;overflow:visible;padding-right:12px;white-space:normal}
+.sheet.user-columns input,.sheet.user-columns select,.sheet.user-columns .type-picker{min-width:0!important;max-width:100%!important;width:100%;box-sizing:border-box;text-overflow:ellipsis}
+.sheet.user-columns .group-label{min-width:0!important}
+.column-resizer{position:absolute;right:-4px;top:0;bottom:0;width:9px;cursor:col-resize;touch-action:none;z-index:15}
+.column-resizer:after{content:'';position:absolute;left:4px;top:20%;bottom:20%;width:1px;background:#d5e1ef}
+.column-resizer:hover:after,.column-resizer:focus:after{background:#4388d1;width:2px}.column-resizer:focus{outline:none}
+.resizing-column,.resizing-column *{cursor:col-resize!important;user-select:none!important}
+@media print{.column-resizer{display:none}}
+#settlementSheet.v2-settlement tbody tr:not(.category):not(.subcategory)>td.settlement-locked,#settlementSheet.v2-settlement tbody tr:not(.category):not(.subcategory)>td.settlement-locked input[readonly]{color:#8f9baa!important}
+#estimateSheet thead th:last-child{background:#eaf2fc!important;color:#52739e}
+#settlementSheet td.amount-cell:not(:has(input)){padding-right:9px}

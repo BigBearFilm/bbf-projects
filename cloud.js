@@ -13,7 +13,7 @@
  function resetHistory(){timeline={base:dataSnapshot(),entries:[],cursor:0};updateHistoryButtons()}
  let needsRender=false;
  function apply(records,reset=false){const ui=state.ui;state={...clone(defaults),...M.unpack(records),ui};state.projectTypes??=clone(initialProjectTypes);state.targets??={margin:null,retention:null};state.projects.forEach(ensureStructure);if(!state.projects.some(p=>p.id===ui.selectedProject)){ui.selectedProject=state.projects[0]?.id;ui.tab=state.projects.length?'info':'dashboard'}if(reset)resetHistory();
-  if(document.activeElement?.matches('input,textarea')&&!document.documentElement.classList.contains('auth-locked')){needsRender=true;return}
+  if(($('#typeMenu')||document.activeElement?.matches('input,textarea'))&&!document.documentElement.classList.contains('auth-locked')){needsRender=true;return}
   renderView();
  }
  function renderView(){const pageXY=[scrollX,scrollY];const shell=$('.sheet-page .table-shell'),xy=[shell?.scrollLeft||0,shell?.scrollTop||0],focus=document.activeElement?.closest('td')?.querySelector('[data-cell]'),id=focus?.dataset.rowid,key=focus?.dataset.cell;render();$('.sheet-page .table-shell')?.scrollTo(...xy);needsRender=false;document.body.classList.toggle('viewer-mode',role==='viewer');if(id&&key)window.bbfSheet?.selectId(id,key);window.scrollTo(...pageXY)}
@@ -45,7 +45,7 @@
  $('#magicLogin').onclick=async()=>{const email=$('#authEmail').value.trim();if(!email){message.textContent='Wpisz adres e-mail.';return}try{const {error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:location.origin+location.pathname}});message.textContent=error?'Nie udało się wysłać linku. Spróbuj później.':'Sprawdź skrzynkę e-mail — jeśli konto ma dostęp, otrzymasz link.'}catch{message.textContent='Brak połączenia.'}};
  $('#cloudRetry').onclick=()=>user?hydrate(user,space):location.reload();
  window.addEventListener('online',()=>flush());window.addEventListener('beforeunload',e=>{if(ready&&M.diff(base,local()).length){e.preventDefault();e.returnValue=''}});
- document.addEventListener('focusout',()=>{if(needsRender)setTimeout(()=>{if(!document.activeElement?.matches('input,textarea'))renderView()},0)});
+ document.addEventListener('focusout',()=>{if(needsRender)setTimeout(()=>{if(!$('#typeMenu')&&!document.activeElement?.matches('input,textarea'))renderView()},0)});
  lock();if(!config.supabaseUrl||!config.supabaseKey){message.textContent='Brak konfiguracji połączenia.';return}
  client=window.supabase.createClient(config.supabaseUrl,config.supabaseKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
  client.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){clear();return}if(session?.user&&session.user.id!==user?.id)setTimeout(()=>{if(session.user.id!==user?.id)hydrate(session.user)},0)});
