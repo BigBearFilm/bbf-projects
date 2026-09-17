@@ -1,5 +1,5 @@
 // Currency stays numeric in storage; only the inactive editor displays PLN.
-const moneySelector='input[data-cell="unit"],input[data-cell="plannedUnit"],input[data-cell="actualNet"],input[data-person-field="defaultRate"],input[data-price][data-pkey="cost"],input[data-price][data-pkey="retention"]';
+const moneySelector='input[data-cell="unit"],input[data-cell="plannedUnit"],input[data-cell="actualNet"],input[data-person-field="defaultRate"],input[data-price][data-pkey="cost"],input[data-price][data-pkey="retention"],input[data-tariff-key="cost"],input[data-tariff-key="retention"]';
 function formatMoneyEditors(){document.querySelectorAll(moneySelector).forEach(el=>{if(el!==document.activeElement)el.value=cur(el.value)})}
 document.addEventListener('focusin',e=>{if(e.target.matches(moneySelector)){e.target.value=String(num(e.target.value));e.target.select()}},true);
 document.addEventListener('focusout',e=>{if(e.target.matches(moneySelector))e.target.value=cur(e.target.value)});
