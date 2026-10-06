@@ -30,5 +30,8 @@
   const value=copy(current);for(const field of new Set([...Object.keys(op.before),...Object.keys(op.after)])){if(equal(op.before[field],op.after[field]))continue;if(!equal(current[field],op.before[field])&&!equal(current[field],op.after[field])){conflicts.push({key,field});continue}if(Object.hasOwn(op.after,field))value[field]=copy(op.after[field]);else delete value[field]}
   result[key]={table:op.table,id:op.id,data:value};
  }return {result,conflicts}}
- root.BBFSyncModel={pack,unpack,diff,rebase,fromSnapshot,equal,stable};
+ // Cache only changed records, not two copies of the entire workspace.
+ function pending(base,local){const saved={version:2,base:{},local:{}};for(const op of diff(base,local)){const k=op.table+'/'+op.id;if(base[k])saved.base[k]=copy(base[k]);if(local[k])saved.local[k]=copy(local[k])}return saved}
+ function restorePending(saved,remote){if(saved.version!==2)return saved.local;const result=copy(remote);for(const op of diff(saved.base,saved.local)){const k=op.table+'/'+op.id;if(op.after===null)delete result[k];else result[k]=copy(saved.local[k])}return result}
+ root.BBFSyncModel={pack,unpack,diff,rebase,fromSnapshot,equal,stable,pending,restorePending};
 })(typeof window==='undefined'?globalThis:window);
