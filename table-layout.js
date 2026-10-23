@@ -4,7 +4,7 @@
   const table=$('#settlementSheet');if(!table)return;
   for(const tr of table.querySelectorAll('tbody tr[data-row]')){
    const row=bbfSheet.findRow(tr.dataset.row);if(!row||['category','subcategory'].includes(row.kind))continue;
-   [...tr.cells].forEach((td,i)=>{td.classList.toggle('amount-cell',[3,4,5,6,8,9,10,11,12,13].includes(i));td.classList.toggle('settlement-locked',i<7&&!(row.isSettlementChild&&[1,2].includes(i)));});
+   [...tr.cells].forEach((td,i)=>{td.classList.toggle('amount-cell',[3,4,5,6,8,9,10,11,12,13,14].includes(i));td.classList.toggle('settlement-locked',i<7&&!(row.isSettlementChild&&[1,2].includes(i)));});
    const rate=tr.querySelector('[data-cell="actualNet"]');if(rate)rate.classList.toggle('rate-editable',!row.system&&!row.settlements?.length&&!['BBF','administracja'].includes(row.actualType));
    for(const td of tr.querySelectorAll('[data-metric="margin"],[data-metric="retention"]')){const negative=num(td.textContent)<0;td.classList.toggle('amount-negative',negative);td.classList.toggle('amount-positive',!negative)}
   }

@@ -23,3 +23,5 @@
 #settlementSheet.v2-settlement tbody tr:not(.category):not(.subcategory)>td.settlement-locked,#settlementSheet.v2-settlement tbody tr:not(.category):not(.subcategory)>td.settlement-locked input[readonly]{color:#8f9baa!important}
 #estimateSheet thead th:last-child{background:#eaf2fc!important;color:#52739e}
 #settlementSheet td.amount-cell:not(:has(input)){padding-right:9px}
+
+#settlementSheet input[data-cell=netTotal]:not(.grid-locked){color:#202630!important}
