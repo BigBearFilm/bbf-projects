@@ -61,7 +61,7 @@ function updatePersonInput(t){const person=state.crew.find(p=>p.id===t.dataset.p
  if(key==='name'){state.priceList.filter(x=>x.person===old).forEach(x=>x.person=person.name);document.querySelectorAll(`[data-person-option="${person.id}"]`).forEach(option=>{option.value=person.name;option.textContent=person.name})}
  document.querySelectorAll(`[data-person-id="${person.id}"][data-person-field="${key}"]`).forEach(el=>{if(el!==t)el.value=t.value});dirty();
 }
-document.addEventListener('input',e=>{const t=e.target;if(t.dataset.personField)updatePersonInput(t);if(t.dataset.roleId){const r=project().rows.find(r=>r.id===t.dataset.roleId);r.name=t.value;dirty()}});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.personField)updatePersonInput(t);if(t.dataset.roleId){const r=crewRole(t.dataset.roleId);if(!r)return;r.name=t.value;dirty()}});
 document.addEventListener('change',e=>{if(e.target.dataset.personField&&e.target.tagName==='SELECT')updatePersonInput(e.target)});
 document.addEventListener('focusin',e=>{if(e.target.matches('input[data-crew-key]'))e.target.select()});
 document.addEventListener('keydown',e=>{

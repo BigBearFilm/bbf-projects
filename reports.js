@@ -23,12 +23,12 @@ decorateSheet=function(){reportDecorate();const table=$('#estimateSheet');if(tab
 const reportCrew=renderCrew;
 renderCrew=function(){reportCrew();const shell=$('.crew-page .table-shell'),table=shell.querySelector('table'),meta=hierarchy(project()),rows=[...table.tBodies[0].rows];
  const sections=document.createElement('div');sections.className='crew-sections';
- for(const [key,title,symbol] of [['crew','Ekipa','users'],['cast','Obsada','star']]){
+ for(const [key,title,symbol] of [['crew','Ekipa','users'],['cast','Obsada','star'],['post','Postprodukcja','video']]){
   const section=document.createElement('section');section.className='crew-section';section.dataset.crewSection=key;
-  const list=rows.filter(tr=>meta.get(tr.querySelector('[data-role-id]')?.dataset.roleId)?.crew===key);
-  section.innerHTML=`<h3>${icon(symbol)} ${title}<span>${list.length} ról</span></h3><div class="table-shell"></div>`;
+  const list=rows.filter(tr=>crewRole(tr.querySelector('[data-role-id]')?.dataset.roleId)&&crewSection(crewRole(tr.querySelector('[data-role-id]').dataset.roleId),meta)===key);
+  section.innerHTML=`<h3>${icon(symbol)} ${title}<span>${list.length} ról</span><button data-add-project-crew="${key}">${icon('plus')} Dodaj osobę</button></h3><div class="table-shell"></div>`;
   const cloneTable=table.cloneNode(false);cloneTable.append(table.tHead.cloneNode(true));const lp=document.createElement('th');lp.textContent='Lp.';cloneTable.tHead.rows[0].prepend(lp);const body=document.createElement('tbody');
-  list.forEach((tr,i)=>{const cell=document.createElement('td');cell.className='crew-lp';cell.textContent=String(i+1);tr.prepend(cell);body.append(tr)});
+  list.forEach((tr,i)=>{const role=crewRole(tr.querySelector('[data-role-id]').dataset.roleId);if(role.crewSection){const remove=document.createElement('button');remove.dataset.removeProjectCrew=role.id;remove.className='remove-extra-crew';remove.setAttribute('aria-label','Usuń przypisanie z projektu');remove.innerHTML=icon('trash');tr.cells[0].append(remove)}const cell=document.createElement('td');cell.className='crew-lp';cell.textContent=String(i+1);tr.prepend(cell);body.append(tr)});
   if(!list.length)body.innerHTML='<tr><td colspan="7" class="empty-crew">Brak ról w tej sekcji.</td></tr>';
   cloneTable.append(body);section.querySelector('.table-shell').append(cloneTable);sections.append(section);
  }

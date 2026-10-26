@@ -1,3 +1,5 @@
+function crewRole(id){return [...(project()?.rows||[]),...(project()?.extraCrew||[])].find(r=>r.id===id)}
+function crewSection(r,meta=hierarchy(project())){if(r.crewSection)return r.crewSection;const h=meta.get(r.id);if(h?.crew)return h.crew;const cat=project().rows.find(x=>x.id===h?.cat);return /postprodukc/i.test(cat?.name||'')?'post':null}
 // Currency stays numeric in storage; only the inactive editor displays PLN.
 const moneySelector='input[data-cell="netTotal"],input[data-cell="salesTotal"],input[data-cell="plannedTotal"],input[data-cell="unit"],input[data-cell="plannedUnit"],input[data-cell="actualNet"],input[data-person-field="defaultRate"],input[data-price][data-pkey="cost"],input[data-price][data-pkey="retention"],input[data-tariff-key="cost"],input[data-tariff-key="retention"]';
 function formatMoneyEditors(){document.querySelectorAll(moneySelector).forEach(el=>{if(el!==document.activeElement)el.value=cur(el.value)})}
@@ -19,27 +21,27 @@ function showPersonPicker(input){
 }
 function highlightPersonOption(){const options=[...document.querySelectorAll('#personPicker button')];options.forEach((b,i)=>b.classList.toggle('highlighted',i===personPickerIndex))}
 function assignCrewPerson(id,newName=''){
- const row=project().rows.find(r=>r.id===personPickerRole);if(!row)return;
+ const row=crewRole(personPickerRole);if(!row)return;
  let person=state.crew.find(p=>p.id===id);
  if(!person&&newName){person={id:uid(),name:newName,role:row.name,phone:'',email:'',defaultType:'faktura',defaultRate:0};state.crew.push(person)}
  if(!person)return;
- row.personId=person.id;row.actualType=person.defaultType;row.actualNet=num(person.defaultRate);
+ row.personId=person.id;if(!row.crewSection&&crewSection(row)!=='post'){row.actualType=person.defaultType;row.actualNet=num(person.defaultRate);
  const price=state.priceList.find(p=>p.person===person.name);
  row.bbfPriceId=person.defaultType==='BBF'?price?.id||'':'';row.bbfItem=person.defaultType==='BBF'?price?.name||'':'';
- if(person.defaultType==='BBF')row.actualNet=0;
+ if(person.defaultType==='BBF')row.actualNet=0;}
  const roleId=row.id;closePersonPicker();dirty('Przypisano osobę: '+person.name+' — '+row.name);renderCrew();document.querySelector(`[data-person-query="${roleId}"]`)?.focus();closePersonPicker();document.querySelector(`[data-person-query="${roleId}"]`)?.setAttribute('aria-expanded','false');
 }
-renderCrew=function(){const p=project(),meta=hierarchy(p),roles=p.rows.filter(r=>r.kind==='item'&&meta.get(r.id).crew);
+renderCrew=function(){const p=project(),meta=hierarchy(p),roles=[...p.rows.filter(r=>r.kind==='item'&&crewSection(r,meta)),...(p.extraCrew||[])];
  $('#view').innerHTML=`<div class="page crew-page"><div class="section-title"><h2>${icon('users')} Ekipa i obsada</h2></div><div class="table-shell"><table class="sheet crew-sheet"><thead><tr><th>Rola</th><th>Imię i nazwisko</th><th>${icon('phone')} Telefon</th><th>${icon('mail')} E-mail</th><th>Domyślna forma osoby</th><th>Stawka domyślna</th></tr></thead><tbody>${roles.map(r=>{const person=state.crew.find(c=>c.id===r.personId);return `<tr><td><input data-crew-key="role" data-role-id="${r.id}" value="${esc(r.name)}" aria-label="Rola w projekcie"></td><td><input data-crew-key="assignment" data-person-query="${r.id}" value="${esc(person?.name||'')}" placeholder="Wpisz imię i nazwisko…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-label="Osoba: ${esc(r.name)}" autocomplete="off"></td>${['phone','email','defaultType','defaultRate'].map(k=>`<td>${personCell(person,k,r.id)}</td>`).join('')}</tr>`}).join('')||'<tr><td colspan="6">Dodaj role w kosztorysie.</td></tr>'}</tbody></table></div></div>`;
  formatMoneyEditors();
 };
-document.addEventListener('focusout',e=>{const input=e.target;if(input.dataset.personQuery){const row=project()?.rows.find(r=>r.id===input.dataset.personQuery);input.value=state.crew.find(p=>p.id===row?.personId)?.name||'';input.setAttribute('aria-expanded','false');closePersonPicker()}});
+document.addEventListener('focusout',e=>{const input=e.target;if(input.dataset.personQuery){const row=crewRole(input.dataset.personQuery);input.value=state.crew.find(p=>p.id===row?.personId)?.name||'';input.setAttribute('aria-expanded','false');closePersonPicker()}});
 document.addEventListener('input',e=>{if(e.target.dataset.personQuery)showPersonPicker(e.target)});
 document.addEventListener('focusin',e=>{if(e.target.dataset.personQuery)showPersonPicker(e.target)});
 document.addEventListener('pointerdown',e=>{if(e.target.closest('#personPicker'))e.preventDefault()});
 document.addEventListener('click',e=>{
  const button=e.target.closest('#personPicker button');if(button){assignCrewPerson(button.dataset.pickPerson,button.dataset.addPersonName);return}
- if(!e.target.closest('[data-person-query]')){document.querySelectorAll('[data-person-query]').forEach(input=>{const row=project()?.rows.find(r=>r.id===input.dataset.personQuery);input.value=state.crew.find(p=>p.id===row?.personId)?.name||'';input.setAttribute('aria-expanded','false')});closePersonPicker()}
+ if(!e.target.closest('[data-person-query]')){document.querySelectorAll('[data-person-query]').forEach(input=>{const row=crewRole(input.dataset.personQuery);input.value=state.crew.find(p=>p.id===row?.personId)?.name||'';input.setAttribute('aria-expanded','false')});closePersonPicker()}
 });
 document.addEventListener('keydown',e=>{
  if(!e.target.dataset.personQuery)return;const options=[...document.querySelectorAll('#personPicker button')];
@@ -48,3 +50,5 @@ document.addEventListener('keydown',e=>{
 },true);
 render();
 document.addEventListener('input',e=>{if(e.target.dataset.personField==='defaultRate')formatMoneyEditors()});
+
+document.addEventListener('click',e=>{const add=e.target.closest('[data-add-project-crew]'),remove=e.target.closest('[data-remove-project-crew]');if(!add&&!remove)return;if(window.bbfCloud?.getRole()==='viewer')return;const p=project();p.extraCrew??=[];if(add){const row={id:uid(),name:'',crewSection:add.dataset.addProjectCrew};p.extraCrew.push(row);dirty('Dodano rolę do ekipy');renderCrew();document.querySelector('[data-role-id="'+row.id+'"]')?.focus()}else{p.extraCrew=p.extraCrew.filter(r=>r.id!==remove.dataset.removeProjectCrew);dirty('Usunięto przypisanie z ekipy');renderCrew()}});
