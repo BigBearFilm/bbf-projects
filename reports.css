@@ -13,3 +13,12 @@
 @media(max-width:600px){.info-primary.without-project-icon{grid-template-columns:minmax(0,1fr)}.info-primary.without-project-icon>.field{grid-column:auto}.target-fields{grid-template-columns:minmax(0,1fr)}.annual-comparison-layout .annual-stats{grid-template-columns:repeat(2,1fr)}.project-carousel-controls{margin-top:0}.year-comparison th,.year-comparison td{padding:12px 8px}.dashboard .project-card{flex-basis:235px;min-width:235px;max-width:235px}}
 
 .crew-section h3 button{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px}.crew-section h3{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.remove-extra-crew{float:right;padding:4px;color:#8995a5}.crew-section td:has(.remove-extra-crew) input{width:calc(100% - 32px)!important}
+
+/* Compact crew actions, aligned with the section heading. */
+.crew-section>h3>[data-add-project-crew]{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 auto;margin-left:auto;width:auto;min-height:32px;padding:6px 10px;border:1px solid #dce5ef;border-radius:7px;background:#fff;color:#3978b4;box-shadow:0 1px 2px #182b4405;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s}
+.crew-section>h3>[data-add-project-crew]{font-family:inherit;font-size:12px;font-weight:500;line-height:18px}
+.crew-section>h3>[data-add-project-crew] .ui-icon{width:14px;height:14px;flex:0 0 14px;margin:0;vertical-align:middle}
+.crew-section>h3>[data-add-project-crew]:hover{background:#f0f6fd;border-color:#b9d2eb;color:#2467a5}
+.crew-section>h3>[data-add-project-crew]:active{background:#e6f0fb}
+.crew-section>h3>[data-add-project-crew]:focus-visible{outline:2px solid #71a9df;outline-offset:3px}
+@media(max-width:700px){.crew-section>h3>[data-add-project-crew]{min-height:40px;padding:8px 11px}}
